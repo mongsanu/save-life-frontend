@@ -1,0 +1,68 @@
+const donors_data: any = [
+    {
+        key: "1",
+        user_name: "John Brown",
+        blood_group: "A+",
+        phone: "0345-1234567",
+        email: "john.brown@gmail.com",
+        facebook_url: "https://www.facebook.com/mongsanu.marma.33",
+        address: "Dhilhi",
+    },
+    {
+        key: "2",
+        user_name: "Jim Green",
+        blood_group: "B+",
+        phone: "0345-1234567",
+        email: "jimgreen@gmail.com",
+        facebook_url: "https://www.facebook.com/mongsanu.marma.33",
+        address: "Lahore",
+    },
+    {
+        key: "3",
+        user_name: "Joe Black",
+        blood_group: "O+",
+        phone: "0345-1234567",
+        email: "joe1223@gmail.com",
+        facebook_url: "https://www.facebook.com/mongsanu.marma.33",
+        address: "Dhaka",
+    },
+    {
+        key: "4",
+        user_name: "Jim Red",
+        blood_group: "AB+",
+        phone: "0345-1234567",
+        email: "jim321@gmail.com",
+        facebook_url: "https://www.facebook.com/mongsanu.marma.33",
+        address: "Karachi",
+    },
+    {
+        key: "5",
+        user_name: "Jim Blue",
+        blood_group: "A+",
+        phone: "0345-1234567",
+        email: "bluen@gmail.com",
+        facebook_url: "https://www.facebook.com/mongsanu.marma.33",
+        address: "Sylhet",
+    },
+    {
+        key: "6",
+        user_name: "Joe Black",
+        blood_group: "O+",
+        phone: "0345-1234567",
+        email: "joe1223@gmail.com",
+        facebook_url: "https://www.facebook.com/mongsanu.marma.33",
+        address: "Kacchi",
+    },
+    {
+        key: "7",
+        user_name: "Mongsano Marma",
+        blood_group: "AB+",
+        phone: "0345-1234567",
+        email: "jim321@gmail.com",
+        facebook_url: "https://www.facebook.com/mongsanu.marma.33",
+        address: "Chittagong",
+    },
+];
+
+export { donors_data };
+
