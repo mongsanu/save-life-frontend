@@ -35,6 +35,8 @@ export default function Register() {
         const body = {
           ...values,
           phone: phone || values?.phone,
+          role_id: 3,
+          user_role: "donor",
           last_donation_date: lastDonationDate || values?.last_donation_date,
 
         }
@@ -132,73 +134,11 @@ export default function Register() {
                     },
                   ]}
                 >
-                  <Input placeholder="Name" size="large" />
+                  <Input autoComplete="off" placeholder="Name" size="large" />
                 </Form.Item>
 
                 <Row gutter={16}>
-                  <Col span={8} lg={8} xs={24}>
-                    {/* Blood Group */}
-                    <Form.Item
-                      name="blood_group"
-                      label="Blood Group"
-                      rules={[
-                        {
-                          required: true,
-                          type: "string",
-                          message: "Please select your blood group",
-                        },
-                      ]}
-                    >
-                      <Select
-                        onChange={(value) => setBloodGroup(value)}
-                        placeholder="Select Blood Group"
-                        size="large"
-                        allowClear
-                        showSearch
-                        showAction={["focus"]}
-                      >
-                        {blood_groups.map((blood_group) => (
-                          <Option key={blood_group} value={blood_group}>
-                            {blood_group}
-                          </Option>
-                        ))}
-                      </Select>
-                    </Form.Item>
-                  </Col>
-                  <Col span={8} lg={8} xs={24}>
-                    {/* Phone */}
-                    <Form.Item
-                      name="phone"
-                      label="Phone"
-                      rules={[
-                        {
-                          required: true,
-                          type: "string",
-                          validator: (rule, value, callback) => {
-                            // value check with pattern
-                            const pattern = /^[0-9]*$/;
-                            if (value) {
-                              if (value.length !== 11) {
-                                callback("Phone number must 11 characters");
-                              } else if (!pattern.test(value)) {
-                                callback("Invalid phone number");
-                              } else {
-                                setPhone(value);
-                                callback();
-                              }
-                            } else {
-                              setPhone(value);
-                              callback();
-                            }
-                          },
-                          // validateTrigger: "onBlur",
-                        },
-                      ]}
-                    >
-                      <Input value={phone} placeholder="Phone" size="large" />
-                    </Form.Item>
-                  </Col>
-                  <Col span={8} lg={8} xs={24}>
+                  <Col span={12} lg={12} xs={24}>
                     {/* Email */}
                     <Form.Item
                       name="email"
@@ -236,6 +176,108 @@ export default function Register() {
                       <Input value={email} placeholder="Email" size="large" />
                     </Form.Item>
                   </Col>
+                  <Col span={12} lg={12} xs={24}>
+                    {/* Password */}
+                    <Form.Item
+                      name="password"
+                      label="Password"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please enter your password",
+                          validator: (rule, value, callback) => {
+                            if (value) {
+                              if (value.length > 15) {
+                                callback(
+                                  "Password must be less than 15 characters"
+                                );
+                              } else if (value.length < 5) {
+                                callback(
+                                  "Password must be greater than 5 characters"
+                                );
+                              } else {
+                                callback();
+                              }
+                            } else {
+                              callback();
+                            }
+                          },
+                        },
+                      ]}
+                    >
+                      <Input.Password
+                        placeholder="Password"
+                        size="large"
+                        autoSave="false"
+                        autoComplete="false"
+                        // iconRender={(visible) =>
+                        //   visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                        // }
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12} lg={12} xs={24}>
+                    {/* Blood Group */}
+                    <Form.Item
+                      name="blood_group"
+                      label="Blood Group"
+                      rules={[
+                        {
+                          required: true,
+                          type: "string",
+                          message: "Please select your blood group",
+                        },
+                      ]}
+                    >
+                      <Select
+                        onChange={(value) => setBloodGroup(value)}
+                        placeholder="Select Blood Group"
+                        size="large"
+                        allowClear
+                        showSearch
+                        showAction={["focus"]}
+                      >
+                        {blood_groups.map((blood_group) => (
+                          <Option key={blood_group} value={blood_group}>
+                            {blood_group}
+                          </Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                  </Col>
+                  <Col span={12} lg={12} xs={24}>
+                    {/* Phone */}
+                    <Form.Item
+                      name="phone"
+                      label="Phone"
+                      rules={[
+                        {
+                          required: true,
+                          type: "string",
+                          validator: (rule, value, callback) => {
+                            // value check with pattern
+                            const pattern = /^[0-9]*$/;
+                            if (value) {
+                              if (value.length !== 11) {
+                                callback("Phone number must 11 characters");
+                              } else if (!pattern.test(value)) {
+                                callback("Invalid phone number");
+                              } else {
+                                setPhone(value);
+                                callback();
+                              }
+                            } else {
+                              setPhone(value);
+                              callback();
+                            }
+                          },
+                          // validateTrigger: "onBlur",
+                        },
+                      ]}
+                    >
+                      <Input value={phone} placeholder="Phone" size="large" />
+                    </Form.Item>
+                  </Col>
                 </Row>
                 {/* Facebook URL */}
                 <Form.Item
@@ -271,7 +313,7 @@ export default function Register() {
                 {/* Last Donation Date */}
                 <Row gutter={16}>
                   <Col span={12} lg={12} xs={24}>
-                  <Form.Item
+                    <Form.Item
                       name="age"
                       label="Age"
                       required
@@ -474,34 +516,7 @@ export default function Register() {
                     </Form.Item>
                   </Col>
                 </Row>
-                {/* <Form.Item
-                  name="address"
-                  label="Address"
-                  rules={[
-                    {
-                      required: true,
-                      type: "string",
-                      // validation error 50 characters
-                      validator: (rule, value, callback) => {
-                        if (value) {
-                          if (value.length > 50) {
-                            callback("Address be less than 50 characters");
-                          } else {
-                            callback();
-                          }
-                        } else {
-                          callback();
-                        }
-                      },
-                    },
-                  ]}
-                >
-                  <TextArea
-                    rows={3}
-                    placeholder="Address"
-                    style={{ resize: "none" }}
-                  />
-                </Form.Item> */}
+                
                 <Form.Item>
                   <Button
                     // type="primary"

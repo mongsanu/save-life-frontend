@@ -7,27 +7,36 @@ import logo from '../../public/logo.png';
 import Image from 'next/image';
 import Cookies from 'js-cookie';
 import router from 'next/router';
+import { get_user_details } from '../../services/user.service';
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Navigation({darkToggle, setDarkToggle}: any) {
+export default function Navigation({darkToggle, setDarkToggle, time_change}: any) {
   const [navigation, setNavigation] = useState([]);
   const [routes, setRoutes] = useState([]);
   const [path, setPath] = useState('');
   const [admin, setAdmin] = useState<any>({});
 
   const token = Cookies.get("access_token");
+  const getUser = async () => {
+    const { data: user, status }: any = await get_user_details(token);
+    if (status) {
+      setAdmin(user);
+    }
+  };
   useEffect(() => {
     const path = window.location.pathname;
-    console.log({path});
-    console.log({token});
+    // console.log({path});
+    // console.log({token});
     
-    const admin = JSON.parse(localStorage.getItem("user") || "{}");
-    console.log({admin});
+    // const admin = JSON.parse(localStorage.getItem("user") || "{}");
+    // console.log({user: admin});
     
     setPath(path);
-    setAdmin(admin);
+    if (token) {
+      getUser();
+    }
     let routes: any = [
       { id: 1, name: 'Home', href: '/', current: true },
       { id: 4, name: 'Request', href: '/request', current: false },
@@ -36,11 +45,14 @@ export default function Navigation({darkToggle, setDarkToggle}: any) {
       // { id: 3, name: 'About', href: '/about', current: false },
     ];
     !token 
-    ?  routes.push({ id: 2, name: 'Register', href: '/register', current: false })
-    :  routes = routes.filter((route: any) => route.id !== 2);
+      ? routes.push(...[
+        { id: 6, name: 'Login', href: '/user/login', current: false },
+        { id: 2, name: 'Register', href: '/register', current: false }
+      ])
+    :  routes = routes.filter((route: any) => (route.id !== 2 && route.id !== 6));
     setRoutes(routes);
     setNavigation(routes);
-  }, [path]);
+  }, [path, time_change]);
 
   
   
@@ -171,10 +183,10 @@ export default function Navigation({darkToggle, setDarkToggle}: any) {
                         className="h-10 w-10 rounded-full bg-red-500 flex flex-col justify-center text-white font-bold text-md"
                       >
                         {
-                          admin?.name 
+                          admin?.user_name 
                           ? <p className='uppercase'>
                               {
-                                admin?.name?.split(" ")?.slice(0, 2)?.map((word: any) => word.substring(0, 1)).join("")
+                                admin?.user_name?.split(" ")?.slice(0, 2)?.map((word: any) => word.substring(0, 1)).join("")
                               }
                           </p>
                           : "A"
@@ -194,13 +206,13 @@ export default function Navigation({darkToggle, setDarkToggle}: any) {
                         <Menu.Item>
                           {({ active }: any) => (
                             <a
-                              href="#"
+                              onClick={() => router.push("/user")}
                               className={classNames(
-                                active ? "bg-gray-100" : "",
+                                path === "/user" ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700 cursor-pointer"
                               )}
                             >
-                              Your Profile
+                              Profile
                             </a>
                           )}
                         </Menu.Item>

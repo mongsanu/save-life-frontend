@@ -1,5 +1,14 @@
 import { request } from "../utils/request";
 
+// user login
+export const user_login = (data?: any) => {
+    return request("/user/login", {
+        method: "post",
+        header: "application/json",
+        body: data,
+    });
+}
+
 // admin signup
 export const admin_signup = (data?: any) => {
     return request("/admin/signup", {
@@ -62,6 +71,25 @@ export const donor_register = (data?: any) => {
     });
 }
 
+
+// get user user details
+export const get_user_details = (token: any) => {
+    return request("/user/details", {
+        method: "get",
+        header: "application/json",
+        token
+    });
+}
+
+// update user details
+export const update_user_details = (data?: any) => {
+    return request("/user/update", {
+        method: "patch",
+        header: "application/json",
+        body: data,
+    });
+}
+
 // user delete 
 export const user_delete = (data?: any) => {
     return request("/user/delete?email=" + data, {
@@ -69,4 +97,3 @@ export const user_delete = (data?: any) => {
         header: "application/json",
     });
 }
-

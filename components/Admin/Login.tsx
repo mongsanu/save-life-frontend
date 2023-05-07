@@ -21,7 +21,12 @@ export default function Login() {
     const [password, setPassword] = React.useState("");
     const handleSubmit = async(values: any) => {
         console.log({ values });
-        const login_result = await admin_login(values);
+        const data_obj = {
+            ...values,
+            role_id: 2,
+            user_role: "admin",
+        }
+        const login_result = await admin_login(data_obj);
         const {data, status, message} = login_result;
         if(status) {
             // store token in local storage
@@ -110,8 +115,8 @@ export default function Login() {
                                     required: true,
                                     validator: (rule, value, callback) => {
                                         if (value) {
-                                            if (value.length < 6) {
-                                                callback("Password must be at least 6 characters");
+                                            if (value.length < 5) {
+                                                callback("Password must be at least 5 characters");
                                             } else {
                                                 setPassword(value);
                                                 callback();

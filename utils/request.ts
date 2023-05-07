@@ -5,7 +5,7 @@ export const request = (link: string, params: any) => {
     // console.log({params});
     let headers: any = {
         // 'Content-type': 'application/json; charset=UTF-8',
-        
+
         // "Access-Control-Allow-Origin": "*",
         // "Access-Control-Allow-Headers": "Content-Type, Authorization",
         // "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
@@ -14,13 +14,16 @@ export const request = (link: string, params: any) => {
     }
     params?.header && (headers["Content-type"] = params.header);
     let token: any = null;
-    if (localStorage?.getItem("access_token")) {
-        token = localStorage.getItem("access_token");
-        // console.log("======================token applied from client/browser local storage=============", token);
-    } else if (Cookies.get("access_token")) {
+    if (params?.token) {
+        token = params.token
+    } else if (Cookies?.get("access_token")) {
         token = Cookies.get("access_token");
         // console.log("======================token applied from client/browser cookie=============", token);
-    } else{
+    } else if (localStorage?.getItem("access_token")) {
+        token = localStorage.getItem("access_token");
+        // console.log("======================token applied from client/browser local storage=============", token);
+    }
+    else {
         console.log("======================empty token =============");
     }
     token && (headers = { ...headers, ...{ Authorization: `Bearer ${token}` } });
@@ -33,24 +36,24 @@ export const request = (link: string, params: any) => {
         // body: (params && params.body) || "",
         headers: headers,
     };
-    
+
     params?.body && (fetchConfig = {
         ...fetchConfig,
         data: params.body,
     });
     // params?.method === 'post' && ( fetchConfig.headers);
     // console.log({fetchConfig});
-    
+
     // console.log({url});
-    
+
     return axios(fetchConfig)
         .then((response: any) => {
             const { data } = response;
-            return data || {status: false, messages: "No data found"};
+            return data || { status: false, messages: "No data found" };
         })
         .catch((error: any) => {
-            console.log({error});
+            console.log({ error });
             return error;
         });
-    
+
 }

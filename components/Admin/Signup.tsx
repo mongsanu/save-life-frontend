@@ -20,6 +20,11 @@ const { TextArea } = Input;
 const { Option } = Select;
 
 const blood_groups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+const user_roles = [
+    // { id: 1, name: "super-admin" },
+    { id: 2, name: "admin" },
+    { id: 3, name: "donor" },
+]
 
 export default function Signup({from}: any) {
     // navigate to other pages
@@ -36,6 +41,7 @@ export default function Signup({from}: any) {
     const [union, setUnion] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [confirmPassword, setConfirmPassword] = React.useState("");
+    const [userRole, setUserRole] = React.useState("");
     const handleSubmit = async (values: any) => {
         console.log({ values });
         const division = divisions.find((division: any) => division.id === values.division);
@@ -48,8 +54,8 @@ export default function Signup({from}: any) {
             // district: district?.name,
             // upazilla: upazilla?.name,
             // union: union?.name,
-            role_id: 1,
-            user_role: "admin",
+            role_id: user_roles.find((role: any) => role.name === userRole)?.id,
+            user_role: userRole,
             facebook_url: values.facebook_url || "https://www.facebook.com/mongsanu.marma.33",
         };
         console.log({ body });
@@ -135,34 +141,70 @@ export default function Signup({from}: any) {
             >
 
                 <Row gutter={16}>
-                    <Col span={8} lg={12} xs={24}>
+                    <Col span={24} lg={24} xs={24}>
                         {/* Name */}
                         <Form.Item
                             name="user_name"
                             label="Name"
                             rules={[
-                            {
-                                required: true,
-                                validator: (rule, value, callback) => {
-                                if (value) {
-                                    if (value.length > 20) {
-                                        callback("Name must be less than 20 characters");
-                                    } else if (value.length < 5) {
-                                        callback("Name must be greater than 5 characters");
+                                {
+                                    required: true,
+                                    validator: (rule, value, callback) => {
+                                    if (value) {
+                                        if (value.length > 20) {
+                                            callback("Name must be less than 20 characters");
+                                        } else if (value.length < 5) {
+                                            callback("Name must be greater than 5 characters");
+                                        } else {
+                                            callback();
+                                            setName(value);
+                                        }
                                     } else {
-                                        callback();
-                                        setName(value);
+                                        callback("Please enter your name");
                                     }
-                                } else {
-                                    callback("Please enter your name");
-                                }
+                                    },
                                 },
-                            },
                             ]}
                         >
                             <Input placeholder="Name" size="middle" />
                         </Form.Item>
+                          </Col>
+                          <Col span={8} lg={12} xs={24}>
+                        {/* Email */}
+                        <Form.Item
+                            name="email"
+                            label="Email"
+                            rules={[
+                            {
+                                required: true,
+                                type: "email",
+                                // pattern: /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/,
+                                // message: 'Invalid email',
+                                validator: (rule, value, callback) => {
+                                // value check with pattern
+                                const pattern =
+                                    /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/;
+                                if (value) {
+                                    if (value.length > 50) {
+                                        callback("Email must be less than 50 characters");
+                                    } else if (!pattern.test(value)) {
+                                        callback("Invalid email");
+                                    } else {
+                                        setEmail(value);
+                                        callback();
+                                    }
+                                } else {
+                                    callback("Please enter your email");
+                                }
+                                },
+                                // validateTrigger: "onBlur",
+                            },
+                            ]}
+                        >
+                            <Input value={email} placeholder="Email" size="middle" autoComplete="off" autoSave="off" />
+                        </Form.Item>
                     </Col>
+                              
                     <Col span={8} lg={12} xs={24}>
                         {/* Blood Group */}
                         <Form.Item
@@ -224,41 +266,38 @@ export default function Signup({from}: any) {
                             <Input value={phone} placeholder="Phone" size="middle" />
                         </Form.Item>
                     </Col>
+                    
                     <Col span={8} lg={12} xs={24}>
-                        {/* Email */}
+                        {/* user-roles */}
                         <Form.Item
-                            name="email"
-                            label="Email"
+                            name="user_role"
+                            label="User Role"
                             rules={[
-                            {
-                                required: true,
-                                type: "email",
-                                // pattern: /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/,
-                                // message: 'Invalid email',
-                                validator: (rule, value, callback) => {
-                                // value check with pattern
-                                const pattern =
-                                    /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/;
-                                if (value) {
-                                    if (value.length > 50) {
-                                        callback("Email must be less than 50 characters");
-                                    } else if (!pattern.test(value)) {
-                                        callback("Invalid email");
-                                    } else {
-                                        setEmail(value);
-                                        callback();
-                                    }
-                                } else {
-                                    callback("Please enter your email");
-                                }
+                                {
+                                    required: true,
+                                    type: "string",
+                                    message: "Please select your user role",
                                 },
-                                // validateTrigger: "onBlur",
-                            },
                             ]}
                         >
-                            <Input value={email} placeholder="Email" size="middle" />
+                            <Select
+                                onChange={(value) => setUserRole(value)}
+                                placeholder="Select User Role"
+                                size="middle"
+                                allowClear
+                                showSearch
+                                showAction={["focus"]}
+                                className="capitalize"
+                            >
+                                {user_roles.map((user_role) => (
+                                    <Option className="capitalize" key={user_role?.id} value={user_role?.name}>
+                                        {user_role?.name}
+                                    </Option>
+                                ))}
+                            </Select>
                         </Form.Item>
                     </Col>
+                          
                 </Row>
                 {/* Last Donation Date */}
                 {/* <Form.Item
