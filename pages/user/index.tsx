@@ -63,12 +63,12 @@ export default class Index extends Component {
                                 <EditOutlined />
                             </button>
                             <div className="flex justify-center md:justify-center -mt-16">
-                                    <img
-                                        className="object-cover rounded-full border-2 border-indigo-500" 
-                                        style={{width: '10rem', height: '10rem'}}
-                                        src={user?.avatar || "https://i.ibb.co/qDtQqH8/teacher-avatar.png"}
-                                        alt="avatar"
-                                    />
+                                <img
+                                    className="object-cover rounded-full border-2 border-indigo-500" 
+                                    style={{width: '10rem', height: '10rem'}}
+                                    src={user?.avatar || "https://i.ibb.co/qDtQqH8/teacher-avatar.png"}
+                                    alt="avatar"
+                                />
                             </div>
                             <div>
                             <h2 className="text-gray-800 mt-3 text-3xl font-extrabold capitalize">{user?.user_name}</h2>

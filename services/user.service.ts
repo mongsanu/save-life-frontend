@@ -97,3 +97,16 @@ export const user_delete = (data?: any) => {
         header: "application/json",
     });
 }
+
+export const reset_password = (data: any) => {
+    return request("/user/reset-password?email=" + data, {
+        method: "get",
+    });
+}
+
+export const change_password = (data: any) => {
+    return request("/user/change-password", {
+        method: "post",
+        body: data
+    })
+}

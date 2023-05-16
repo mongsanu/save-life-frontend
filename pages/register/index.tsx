@@ -527,6 +527,13 @@ export default function Register() {
                   </Button>
                 </Form.Item>
               </Form>
+
+              <p className="text-center py-5">
+                Have an account?{" "}
+                <Link href="/user/login">
+                    <a className="text-blue-500">Login</a>
+                </Link>
+            </p>
             </div>
           </main>
         </Layout>

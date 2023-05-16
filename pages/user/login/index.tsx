@@ -132,16 +132,23 @@ export default function login() {
                     Login
                   </Button>
                 </Form.Item>
+                <div className="flex justify-between w-100">
+                  <div>
+                    Don't have an account?
+                    <span
+                      // onClick={() => setLoginFlag(false)}
+                      className="mx-2 italic text-indigo-500 hover:text-orange-500 transition-all ease-in-out duration-300 underline cursor-pointer"
+                    >
+                      <Link href="/register">Register</Link>
+                    </span>
+                  </div>
+                  <div>
+                    <span className='mx-2 italic text-indigo-500 hover:text-orange-500 transition-all ease-in-out duration-300 underline cursor-pointer'>
+                      <Link href="/user/forgot-password">Forgot Password</Link>
+                    </span>
+                  </div>
+                </div>
               </Form>
-              {/* <div className="text-center">
-                Don't have an account?
-                <span
-                  // onClick={() => setLoginFlag(false)}
-                  className="mx-2 italic text-indigo-500 hover:text-orange-500 transition-all ease-in-out duration-300 underline cursor-pointer"
-                >
-                  <Link href="/signup">Signup</Link>
-                </span>
-              </div> */}
             </div>
           </main>
         </Layout>
