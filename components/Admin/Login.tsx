@@ -146,12 +146,12 @@ export default function Login() {
                                 Login
                             </Button>
                         </Form.Item>
-                        <p className="text-center py-5">
+                        {/* <p className="text-center py-5">
                             Don't have an account?{" "}
                             <Link href="/admin/signup">
                                 <a className="text-blue-500">Register</a>
                             </Link>
-                        </p>
+                        </p> */}
                     </Form>
                 </div>
             </main>

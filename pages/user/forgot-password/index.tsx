@@ -72,6 +72,13 @@ export default function login() {
         setMessage(change_res?.message);
         form.resetFields();
         
+      } else {
+        notification.error({
+          message: "Error",
+          description: change_res?.message,
+          style: { zIndex: 10000000 },
+          placement: "bottomRight",
+        });
       }
       
     } catch (err: any) {

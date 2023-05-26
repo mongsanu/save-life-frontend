@@ -613,7 +613,7 @@ export default function Signup({from}: any) {
                     </Button>
                 </Form.Item>
             </Form>
-            {
+            {/* {
                 from
                 ? null
                 : <p className="text-center pb-5">
@@ -622,7 +622,7 @@ export default function Signup({from}: any) {
                         <a className="text-blue-500 hover:text-blue-400">Login</a>
                     </Link>
                 </p>
-            }
+            } */}
             
           </div>
         </main>
