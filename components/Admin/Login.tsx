@@ -146,6 +146,13 @@ export default function Login() {
                                 Login
                             </Button>
                         </Form.Item>
+                        <div className="flex justify-center w-100 pb-5">
+                            <div>
+                                <span className='mx-2 italic text-indigo-500 hover:text-orange-500 transition-all ease-in-out duration-300 underline cursor-pointer'>
+                                <Link href="/user/forgot-password">Forgot Password</Link>
+                                </span>
+                            </div>
+                        </div>
                         {/* <p className="text-center py-5">
                             Don't have an account?{" "}
                             <Link href="/admin/signup">
